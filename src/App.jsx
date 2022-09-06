@@ -7,18 +7,20 @@ function App() {
   
   const [weather,setWeather]= useState ({});
   const [selector, setSelector] =useState(true);
-  const [metric,setMetric] = useState(true);
+  const [metric,setMetric] = useState("");
+
+  function changeMetric(){
+    setSelector(!selector)
+    selector?setMetric("metric"):setMetric("imperial");
+    return metric;
+  }
   
 
 
   useEffect(()=>{
-  
     navigator.geolocation.getCurrentPosition(success);
-  
-  
-  
-  function success(pos) {
     
+  function success(pos) {   
     const crd = pos.coords;
     console.log('Your current position is:');
     console.log(`Latitude : ${crd.latitude}`);
@@ -26,11 +28,12 @@ function App() {
     console.log(`More or less ${crd.accuracy} meters.`);
     axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${crd.latitude}&lon=${crd.longitude}&appid=1be5a17c97513a6ea873cbddde7fd6c7&units=${metric}`)
     .then(res =>setWeather(res.data));   
+    console.log(metric);
   }
   
 
     
-  }, [])
+  }, [metric])
 
   return ( 
     <div className="App">
@@ -41,9 +44,10 @@ function App() {
       <h2>{weather.main?.temp}</h2>
       <IconWeather weather={weather}/>
       {console.log(weather)}
-      <button onClick={()=>{setSelector(!selector); selector? setMetric('metric'):setMetric('imperial');
-  console.log(metric); navigator.geolocation.getCurrentPosition(success);}}>CELCIUS/Farenheit</button>
+      <button onClick={()=>changeMetric()}>CELCIUS/Farenheit</button>
+      
       {console.log(selector)}
+      {/* {console.log(metric)} */}
       </div>
     </div>
   )
