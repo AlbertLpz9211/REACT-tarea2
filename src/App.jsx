@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import './App.css'
+import IconWeather from './components/IconWeather';
 
 function App() {
   
@@ -19,20 +20,23 @@ function App() {
     console.log(`More or less ${crd.accuracy} meters.`);
     axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${crd.latitude}&lon=${crd.longitude}&appid=1be5a17c97513a6ea873cbddde7fd6c7`)
     .then(res =>setWeather(res.data));
+  
    
     
   }
-
+  
 
     
   }, [])
 
   return (
     <div className="App">
-      <h1>hola mundo</h1>
-
-      {/* añadir imagen en weather */}
-        <img src={`http://openweathermap.org/img/wn/${weather.weather?.[0].icon}@4x.png`} alt="" />
+      <div className="card">
+      <h1>Weather Master App</h1>
+      <h2>{weather?.name}, {weather.sys?.country}</h2>
+      <IconWeather weather={weather}/>
+      {console.log(weather)}
+      </div>
     </div>
   )
 }
