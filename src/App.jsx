@@ -29,7 +29,7 @@ function App() {
     
   }, [])
 
-  return (
+  return ( 
     <div className="App">
       <div className="card">
       <h1>Weather Master App</h1>
